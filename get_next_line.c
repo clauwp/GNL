@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clau <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/13 22:53:59 by clau              #+#    #+#             */
+/*   Updated: 2021/10/13 22:54:59 by clau             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
 #include "get_next_line.h"
-
 
 /*int	main(void)
 {
@@ -40,7 +51,7 @@ char	*get_next_line(int fd)
 			break ;
 		ft_addnode(ft_newnode(buf), lst);
 		len = ft_getstr_len(lst);
-	} 
+	}
 	return (ft_newline(lst, len));
 }
 

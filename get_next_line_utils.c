@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clau <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/13 22:56:45 by clau              #+#    #+#             */
+/*   Updated: 2021/10/13 23:02:03 by clau             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -32,11 +44,11 @@ char	*ft_newstr(int fd)
 	int		byte_read;
 	char	*copy_buf;
 
-	buf = (char *)malloc(sizeof(char) * BUFFERSIZE);
-	byte_read = read(fd, buf, BUFERFSIZE);
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	byte_read = read(fd, buf, BUFFER_SIZE);
 	if (byte_read <= 0)
 		return (NULL);
-	buf[byte_read]= '\0';
+	buf[byte_read] = '\0';
 	copy_buf = strdup(buf);
 	free(buf);
 	return (copy_buf);
@@ -49,13 +61,13 @@ t_node	*ft_newnode(char *str)
 	node = (t_node *)malloc(sizeof(t_node));
 	node->str = str;
 	node->next_node = NULL;
-	return (node);  
+	return (node);
 }
 
 void	ft_addnode(t_node *node, t_list *list)
 {
 	t_node	**current_node;
-	
+
 	current_node = &(list->node);
 	if (*current_node == NULL)
 		*current_node = node;
