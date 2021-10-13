@@ -11,14 +11,14 @@ typedef struct s_list{
     struct s_list *next_list;
 } t_list;
 
-t_list *ft_getlst(int fd, t_list **lst_arr);
-t_list *ft_newlst(int fd);
-void ft_addlst(t_list *list, t_list **lst_arr);
-t_node *ft_newnode(char *str);
-void ft_addnode(t_node *node, t_list *list);
-t_node *ft_clearnodes(t_list *lst);
+t_list  *ft_getlst(int fd, t_list **lst_arr);
+t_list  *ft_newlst(int fd);
+void    ft_addlst(t_list *list, t_list **lst_arr);
+t_node  *ft_newnode(char *str);
+void    ft_addnode(t_node *node, t_list *list);
+t_node  *ft_clearnodes(t_list *lst);
 char    *ft_newline(t_list *lst, int len);
-int    ft_getstr_len(t_list *lst);
+int     ft_getstr_len(t_list *lst);
 char    *ft_newstr(int fd);
 char    *get_next_line(int fd);
 #endif
