@@ -6,7 +6,7 @@
 /*   By: clau <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:56:45 by clau              #+#    #+#             */
-/*   Updated: 2021/10/13 23:02:03 by clau             ###   ########.fr       */
+/*   Updated: 2021/10/13 23:52:34 by clau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_newstr(int fd)
 	if (byte_read <= 0)
 		return (NULL);
 	buf[byte_read] = '\0';
-	copy_buf = strdup(buf);
+	copy_buf = ft_strdup(buf);
 	free(buf);
 	return (copy_buf);
 }
