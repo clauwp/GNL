@@ -6,7 +6,7 @@
 /*   By: clau <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:56:45 by clau              #+#    #+#             */
-/*   Updated: 2021/10/13 23:52:34 by clau             ###   ########.fr       */
+/*   Updated: 2021/10/14 01:21:13 by clau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*ft_newstr(int fd)
 	char	*buf;
 	int		byte_read;
 	char	*copy_buf;
-	const int BUFFER_SIZE = 10;
 
 	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	byte_read = read(fd, buf, BUFFER_SIZE);
