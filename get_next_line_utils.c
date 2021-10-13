@@ -103,7 +103,10 @@ char	*ft_newline(t_list *lst, int len)
 	while (*current_node != NULL)
 	{
 		while (*((*current_node)->str) != 0 && len-- > 0)
+		{
 			*copy_retstr++ = *((*current_node)->str++);
+			free(((*current_node)->str)-1);
+		}
 		if (len <= 0)
 			*copy_retstr = 0;
 		current_node = &((*current_node)->next_node);
