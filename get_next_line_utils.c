@@ -42,6 +42,7 @@ char	*ft_newstr(int fd)
 	char	*buf;
 	int		byte_read;
 	char	*copy_buf;
+	const int BUFFER_SIZE = 10;
 
 	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	byte_read = read(fd, buf, BUFFER_SIZE);
@@ -89,6 +90,7 @@ char	*ft_newline(t_list *lst, int len)
 	t_node	**current_node;
 	char	*retstr;
 	char	*copy_retstr;
+	char	*marker;
 
 	if (len < 0)
 		len = -len;
@@ -96,18 +98,16 @@ char	*ft_newline(t_list *lst, int len)
 		return (NULL);
 	current_node = &(lst->node);
 	retstr = (char *)malloc(sizeof(char) * (len + 1));
-	if (retstr == NULL)
-		return (NULL);
 	copy_retstr = retstr;
 	while (*current_node != NULL)
 	{
+		marker = (*current_node)->str;
 		while (*((*current_node)->str) != 0 && len-- > 0)
-		{
 			*copy_retstr++ = *((*current_node)->str++);
-			free(((*current_node)->str)-1);
-		}
 		if (len <= 0)
 			*copy_retstr = 0;
+		if (*((*current_node)->str) == 0)
+			free(marker);
 		current_node = &((*current_node)->next_node);
 	}
 	return (retstr);
