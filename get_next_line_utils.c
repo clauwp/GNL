@@ -4,50 +4,6 @@
 #include <string.h>
 #include "get_next_line.h"
 
-t_list	*ft_getlst(int fd, t_list **lst_arr)
-{
-	t_list	*retlist;
-
-	if (*lst_arr == NULL)
-	{
-		retlist = ft_newlst(fd);
-		ft_addlst(retlist, lst_arr);
-		return (retlist);
-	}
-	while (*lst_arr != NULL)
-	{
-		if ((*lst_arr)->fd == fd)
-			return (*lst_arr);
-		lst_arr = &((*lst_arr)->next_list);
-	}
-	retlist = ft_newlst(fd);
-	ft_addlst(retlist, lst_arr);
-	return (retlist);
-}
-
-t_list	*ft_newlst(int fd)
-{
-	t_list	*list;
-
-	list = (t_list *)malloc(sizeof(t_list) * 1);
-	list->fd = fd;
-	list->node = NULL;
-	list->next_list = NULL;
-	return (list);
-}
-
-void	ft_addlst(t_list *list, t_list **lst_arr)
-{
-	if (*lst_arr == NULL)
-		*lst_arr = list;
-	else
-	{
-		while ((*lst_arr)->next_list != NULL)
-			lst_arr = &((*lst_arr)->next_list);
-		(*lst_arr)->next_list = list;
-	}
-}
-
 int	ft_getstr_len(t_list *list)
 {
 	t_node	**current_node;
