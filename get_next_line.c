@@ -13,22 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>
-#include <stdio.h>
 #include "get_next_line.h"
-
-/*int	main(void)
-{
-	int fd = open("text2.txt", O_RDONLY);
-	int fd2 = open("text.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd2));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd2));
-	printf("%s", get_next_line(fd2));
-}
-*/
 
 char	*get_next_line(int fd)
 {
@@ -103,17 +88,17 @@ char	*ft_strdup(const char *s1)
 {
 	char	*retstr;
 	char	*copyretstr;
+	int		len;
 
-	retstr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	len = 0;
+	while (s1[len])
+		len++;
+	retstr = (char *)malloc(sizeof(char) * (len + 1));
 	if (retstr != NULL)
 	{
 		copyretstr = retstr;
 		while (*s1)
-		{
-			*retstr = *s1;
-			retstr++;
-			s1++;
-		}
+			*retstr++ = *s1++;
 		*retstr = 0;
 		return (copyretstr);
 	}

@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>
 #include "get_next_line.h"
 
 int	ft_getstr_len(t_list *list)
