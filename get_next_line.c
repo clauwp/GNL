@@ -22,6 +22,8 @@ char	*get_next_line(int fd)
 	int				len;
 	char			*buf;
 
+	if (fd < 0)
+		return (NULL);
 	if (lst_arr == NULL)
 	{
 		lst_arr = (t_list **)malloc(sizeof(t_list *));
@@ -44,12 +46,6 @@ t_list	*ft_getlst(int fd, t_list **lst_arr)
 {
 	t_list	*retlist;
 
-	if (*lst_arr == NULL)
-	{
-		retlist = ft_newlst(fd);
-		ft_addlst(retlist, lst_arr);
-		return (retlist);
-	}
 	while (*lst_arr != NULL)
 	{
 		if ((*lst_arr)->fd == fd)
