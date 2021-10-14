@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 int	ft_getstr_len(t_list *list)
@@ -26,6 +27,7 @@ int	ft_getstr_len(t_list *list)
 	while (*current_node != NULL)
 	{
 		temp = (*current_node)->str;
+		//printf("node's str in get_strlen: %s \n", temp);
 		while (*temp != 0)
 		{
 			len++;
@@ -43,13 +45,14 @@ char	*ft_newstr(int fd)
 	int		byte_read;
 	char	*copy_buf;
 
-	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	byte_read = read(fd, buf, BUFFER_SIZE);
 	if (byte_read <= 0)
 		return (NULL);
 	buf[byte_read] = '\0';
 	copy_buf = ft_strdup(buf);
 	free(buf);
+	//printf("buf: %s\n", copy_buf);
 	return (copy_buf);
 }
 
@@ -84,30 +87,54 @@ Allocate memory and forms a string of a new line from the linked list.
 @len: length of string of new line
 @return: a pointer to the string created
 */
-char	*ft_newline(t_list *lst, int len)
+char	*ft_newline(t_list **lst, int len)
 {
-	t_node	**current_node;
+	t_node	*current_node;
 	char	*retstr;
-	char	*copy_retstr;
-	char	*marker;
+	char	*temp_str;
+	int		i;
+	int		k;
 
+	i = 0;
 	if (len < 0)
 		len = -len;
 	else if (len == 0)
 		return (NULL);
-	current_node = &(lst->node);
+	current_node = (*lst)->node;
 	retstr = (char *)malloc(sizeof(char) * (len + 1));
-	copy_retstr = retstr;
+	if (retstr == NULL)
+		return (NULL);
+	while (current_node != NULL)
+	{
+		temp_str = current_node->str;
+		k = 0;
+		while (temp_str[k] != 0 && len-- > 0)
+			retstr[i++] = temp_str[k++];
+		if (len <= 0)
+			retstr[i] = 0;
+		else if (temp_str[i] == 0)
+			free (current_node->str);
+		current_node = current_node->next_node;
+	}
+	ft_delnode(lst);
+	return (retstr);
+}
+
+void ft_delnode(t_list **lst)
+{
+	t_node **current_node;
+	t_node *temp_node;
+
+	current_node = &((*lst)->node);
 	while (*current_node != NULL)
 	{
-		marker = (*current_node)->str;
-		while (*((*current_node)->str) != 0 && len-- > 0)
-			*copy_retstr++ = *((*current_node)->str++);
-		if (len <= 0)
-			*copy_retstr = 0;
+		temp_node = (*current_node)->next_node;
 		if (*((*current_node)->str) == 0)
-			free(marker);
-		current_node = &((*current_node)->next_node);
+		{
+			free(*current_node);
+			*current_node = temp_node;
+		}
+		else
+			break ;
 	}
-	return (retstr);
 }

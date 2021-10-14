@@ -11,13 +11,11 @@
 * 2. empty file
 * 3. file with only \n
 */
-char *ft_temp(void)
-{
-	char *str =(char *)malloc(sizeof(char) * 4);
-	str = "hi!";
-	return (str);
-}
+
 int	main(void)
 {
-	get_next_line(open("text2.txt", O_RDONLY));
+	int	fd = open("text2.txt", O_RDONLY);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	
 }

@@ -1,4 +1,6 @@
-LOL
-HI
-BYE
-THANKS
+hello
+42KL
+How
+are
+you
+?

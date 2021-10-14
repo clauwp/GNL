@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
@@ -22,7 +23,7 @@ char	*get_next_line(int fd)
 	int				len;
 	char			*buf;
 
-	if (fd < 0)
+	if (fd <= 0)
 		return (NULL);
 	if (lst_arr == NULL)
 	{
@@ -38,8 +39,9 @@ char	*get_next_line(int fd)
 			break ;
 		ft_addnode(ft_newnode(buf), lst);
 		len = ft_getstr_len(lst);
+		//printf("2nd len:%d\n", len);
 	}
-	return (ft_newline(lst, len));
+	return (ft_newline(&lst, len));
 }
 
 t_list	*ft_getlst(int fd, t_list **lst_arr)
