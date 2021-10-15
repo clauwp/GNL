@@ -16,11 +16,9 @@ int	main(void)
 {
 	int	fd = open("text2.txt", O_RDONLY);
 	int	fd2 = open("text.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd2));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd2));
-	printf("%s", get_next_line(fd2));
-	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(10));
+	printf("2nd call:\n");
+	printf("%s", get_next_line(fd2));
+	printf("3rd call:\n");
+	printf("%s", get_next_line(fd));
 }

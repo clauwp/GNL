@@ -1,4 +1,3 @@
-HELLO
-HOW
-ARE
-YOU
+how
+123456789
+you

@@ -92,13 +92,11 @@ char	*ft_newline(t_list **lst, int len)
 	retstr = (char *)malloc(sizeof(char) * (len + 1));
 	if (retstr == NULL)
 		return (NULL);
-	while (*current_node != NULL)
+	while (*current_node != NULL && len-- > 0)
 	{
 		retstr[i++] = (*current_node)->c;
 		retstr[i] = 0;
 		(*current_node)-> c = 0;
-		if (--len <= 0)
-			break ;
 		current_node = &((*current_node)->next_node);
 	}
 	ft_delnode(lst);

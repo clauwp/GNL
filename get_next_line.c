@@ -20,36 +20,32 @@ char	*get_next_line(int fd)
 {
 	static t_list	**lst_arr;
 	t_list			*lst;
-	int				len;
 	char			*buf;
-
-	if (fd <= 0)
-		return (NULL);
-	lst = ft_getlst(fd, lst_arr);
-	len = ft_getstr_len(lst);
-	while (len <= 0)
-	{
-		buf = ft_newstr(fd);
-		if (buf == NULL)
-		{
-			free(lst);
-			break ;
-		}
-		ft_add_newnode(buf, lst);
-		len = ft_getstr_len(lst);
-	}
-	return (ft_newline(&lst, len));
-}
-
-t_list	*ft_getlst(int fd, t_list **lst_arr)
-{
-	t_list	*retlist;
 
 	if (lst_arr == NULL)
 	{
 		lst_arr = (t_list **)malloc(sizeof(t_list *));
 		*lst_arr = NULL;
 	}
+	if (fd <= 0)
+		return (NULL);
+	lst = ft_getlst(fd, lst_arr);
+	while (ft_getstr_len(lst) <= 0)
+	{
+		buf = ft_newstr(fd);
+		if (buf == NULL)
+			break;
+		ft_add_newnode(buf, lst);
+	}
+	if (*lst_arr ==NULL)
+		free(lst_arr);
+	return (ft_newline(&lst, ft_getstr_len(lst)));
+}
+
+t_list	*ft_getlst(int fd, t_list **lst_arr)
+{
+	t_list	*retlist;
+
 	while (*lst_arr != NULL)
 	{
 		if ((*lst_arr)->fd == fd)
