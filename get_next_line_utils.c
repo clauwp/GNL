@@ -16,54 +16,44 @@
 #include <stdio.h>
 #include "get_next_line.h"
 
+/*
+calculate the number of characters that exists in current list
+returns num of chars if a line (ie '\n' is present) can be formed
+else, returns a negative num.
+*/
 int	ft_getstr_len(t_list *list)
 {
-	t_node	**current_node;
+	t_node	*current_node;
 	int		len;
-	char	*temp;
 
-	current_node = &(list->node);
+	current_node = list->node;
 	len = 0;
-	while (*current_node != NULL)
+	while (current_node != NULL)
 	{
-		temp = (*current_node)->str;
-		//printf("node's str in get_strlen: %s \n", temp);
-		while (*temp != 0)
-		{
+		if (current_node->c != 0)
 			len++;
-			if (*temp++ == '\n')
-				return (len);
-		}
-		current_node = &((*current_node)->next_node);
+		if (current_node->c == '\n')
+			return (len);
+		current_node = current_node->next_node;
 	}
 	return (-len);
 }
 
-char	*ft_newstr(int fd)
-{
-	char	*buf;
-	int		byte_read;
-	char	*copy_buf;
-
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	byte_read = read(fd, buf, BUFFER_SIZE);
-	if (byte_read <= 0)
-		return (NULL);
-	buf[byte_read] = '\0';
-	copy_buf = ft_strdup(buf);
-	free(buf);
-	//printf("buf: %s\n", copy_buf);
-	return (copy_buf);
-}
-
-t_node	*ft_newnode(char *str)
+void	ft_add_newnode(char *str, t_list *lst)
 {
 	t_node	*node;
+	int		i;
 
-	node = (t_node *)malloc(sizeof(t_node));
-	node->str = str;
-	node->next_node = NULL;
-	return (node);
+	i = 0;
+	while (str[i])
+	{
+		node = (t_node *)malloc(sizeof(t_node));
+		node->c = str[i];
+		node->next_node = NULL;
+		ft_addnode(node, lst);
+		i++;
+	}
+	free(str);
 }
 
 void	ft_addnode(t_node *node, t_list *list)
@@ -89,32 +79,27 @@ Allocate memory and forms a string of a new line from the linked list.
 */
 char	*ft_newline(t_list **lst, int len)
 {
-	t_node	*current_node;
+	t_node	**current_node;
 	char	*retstr;
-	char	*temp_str;
 	int		i;
-	int		k;
 
 	i = 0;
 	if (len < 0)
 		len = -len;
-	else if (len == 0)
+	else if (len == 0 || *lst == NULL)
 		return (NULL);
-	current_node = (*lst)->node;
+	current_node = &((*lst)->node);
 	retstr = (char *)malloc(sizeof(char) * (len + 1));
 	if (retstr == NULL)
 		return (NULL);
-	while (current_node != NULL)
+	while (*current_node != NULL)
 	{
-		temp_str = current_node->str;
-		k = 0;
-		while (temp_str[k] != 0 && len-- > 0)
-			retstr[i++] = temp_str[k++];
-		if (len <= 0)
-			retstr[i] = 0;
-		else if (temp_str[i] == 0)
-			free (current_node->str);
-		current_node = current_node->next_node;
+		retstr[i++] = (*current_node)->c;
+		retstr[i] = 0;
+		(*current_node)-> c = 0;
+		if (--len <= 0)
+			break ;
+		current_node = &((*current_node)->next_node);
 	}
 	ft_delnode(lst);
 	return (retstr);
@@ -129,7 +114,7 @@ void ft_delnode(t_list **lst)
 	while (*current_node != NULL)
 	{
 		temp_node = (*current_node)->next_node;
-		if (*((*current_node)->str) == 0)
+		if ((*current_node)->c == 0)
 		{
 			free(*current_node);
 			*current_node = temp_node;

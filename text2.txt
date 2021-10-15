@@ -1,6 +1,4 @@
-hello
-42KL
-How
-are
-you
-?
+HELLO
+HOW
+ARE
+YOU

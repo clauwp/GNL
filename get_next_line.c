@@ -25,21 +25,18 @@ char	*get_next_line(int fd)
 
 	if (fd <= 0)
 		return (NULL);
-	if (lst_arr == NULL)
-	{
-		lst_arr = (t_list **)malloc(sizeof(t_list *));
-		*lst_arr = NULL;
-	}
 	lst = ft_getlst(fd, lst_arr);
 	len = ft_getstr_len(lst);
 	while (len <= 0)
 	{
 		buf = ft_newstr(fd);
 		if (buf == NULL)
+		{
+			free(lst);
 			break ;
-		ft_addnode(ft_newnode(buf), lst);
+		}
+		ft_add_newnode(buf, lst);
 		len = ft_getstr_len(lst);
-		//printf("2nd len:%d\n", len);
 	}
 	return (ft_newline(&lst, len));
 }
@@ -48,18 +45,22 @@ t_list	*ft_getlst(int fd, t_list **lst_arr)
 {
 	t_list	*retlist;
 
+	if (lst_arr == NULL)
+	{
+		lst_arr = (t_list **)malloc(sizeof(t_list *));
+		*lst_arr = NULL;
+	}
 	while (*lst_arr != NULL)
 	{
 		if ((*lst_arr)->fd == fd)
 			return (*lst_arr);
 		lst_arr = &((*lst_arr)->next_list);
 	}
-	retlist = ft_newlst(fd);
-	ft_addlst(retlist, lst_arr);
+	retlist = ft_add_newlst(fd, lst_arr);
 	return (retlist);
 }
 
-t_list	*ft_newlst(int fd)
+t_list	*ft_add_newlst(int fd, t_list **lst_arr)
 {
 	t_list	*list;
 
@@ -67,11 +68,6 @@ t_list	*ft_newlst(int fd)
 	list->fd = fd;
 	list->node = NULL;
 	list->next_list = NULL;
-	return (list);
-}
-
-void	ft_addlst(t_list *list, t_list **lst_arr)
-{
 	if (*lst_arr == NULL)
 		*lst_arr = list;
 	else
@@ -80,6 +76,26 @@ void	ft_addlst(t_list *list, t_list **lst_arr)
 			lst_arr = &((*lst_arr)->next_list);
 		(*lst_arr)->next_list = list;
 	}
+	return (list);
+}
+
+char	*ft_newstr(int fd)
+{
+	char	*buf;
+	int		byte_read;
+	char	*copy_buf;
+
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	byte_read = read(fd, buf, BUFFER_SIZE);
+	if (byte_read <= 0)
+	{
+		free(buf);
+		return (NULL);
+	}
+	buf[byte_read] = '\0';
+	copy_buf = ft_strdup(buf);
+	free(buf);
+	return (copy_buf);
 }
 
 char	*ft_strdup(const char *s1)
