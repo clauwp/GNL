@@ -11,8 +11,8 @@ typedef struct s_list{
     struct s_list *next_list;
 } t_list;
 
-t_list  *ft_getlst(int fd, t_list **lst_arr);
-t_list  *ft_add_newlst(int fd, t_list **lst_arr);
+t_list  **ft_getlst(int fd, t_list **lst_arr);
+t_list  **ft_add_newlst(int fd, t_list **lst_arr);
 void    ft_add_newnode(char *str, t_list *lst);
 void    ft_addnode(t_node *node, t_list *list);
 t_node  *ft_clearnodes(t_list *lst);

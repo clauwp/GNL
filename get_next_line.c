@@ -18,7 +18,7 @@
 char	*get_next_line(int fd)
 {
 	static t_list	**lst_arr;
-	t_list			*lst;
+	t_list			**lst_ptr;
 	char			*buf;
 
 	if (lst_arr == NULL)
@@ -28,36 +28,36 @@ char	*get_next_line(int fd)
 	}
 	if (fd < 0)
 		return (NULL);
-	lst = ft_getlst(fd, lst_arr);
-	while (ft_getstr_len(lst) <= 0)
+	lst_ptr = ft_getlst(fd, lst_arr);
+	while (ft_getstr_len(*lst_ptr) <= 0)
 	{
 		buf = ft_newstr(fd);
 		if (buf == NULL)
 			break;
-		ft_add_newnode(buf, lst);
+		ft_add_newnode(buf, *lst_ptr);
 	}
-	if (buf == NULL && lst->node == NULL)
-		free(lst);
+	if (buf == NULL && (*lst_ptr)->node == NULL)
+	{
+		free((*lst_ptr));
+		*lst_ptr = NULL;
+	}
 	if (*lst_arr == NULL)
 		free(lst_arr);
-	return (ft_newline(&lst, ft_getstr_len(lst)));
+	return (ft_newline(lst_ptr, ft_getstr_len(*lst_ptr)));
 }
 
-t_list	*ft_getlst(int fd, t_list **lst_arr)
+t_list	**ft_getlst(int fd, t_list **lst_arr)
 {
-	t_list	*retlist;
-
 	while (*lst_arr != NULL)
 	{
 		if ((*lst_arr)->fd == fd)
-			return (*lst_arr);
+			return (lst_arr);
 		lst_arr = &((*lst_arr)->next_list);
 	}
-	retlist = ft_add_newlst(fd, lst_arr);
-	return (retlist);
+	return (ft_add_newlst(fd, lst_arr));
 }
 
-t_list	*ft_add_newlst(int fd, t_list **lst_arr)
+t_list	**ft_add_newlst(int fd, t_list **lst_arr)
 {
 	t_list	*list;
 
@@ -66,14 +66,17 @@ t_list	*ft_add_newlst(int fd, t_list **lst_arr)
 	list->node = NULL;
 	list->next_list = NULL;
 	if (*lst_arr == NULL)
+	{
 		*lst_arr = list;
+		return (lst_arr);
+	}
 	else
 	{
 		while ((*lst_arr)->next_list != NULL)
 			lst_arr = &((*lst_arr)->next_list);
 		(*lst_arr)->next_list = list;
 	}
-	return (list);
+	return (&((*lst_arr)->next_list));
 }
 
 char	*ft_newstr(int fd)

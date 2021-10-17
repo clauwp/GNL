@@ -26,6 +26,8 @@ int	ft_getstr_len(t_list *list)
 	t_node	*current_node;
 	int		len;
 
+	if (list == NULL)
+		return (0);
 	current_node = list->node;
 	len = 0;
 	while (current_node != NULL)
