@@ -21,5 +21,5 @@ int	main(void)
 	
 	printf("%s", get_next_line(fd));
 	
-	printf("%s", get_next_line(fd));
+	//printf("%s", get_next_line(fd));
 }

@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
@@ -79,20 +78,15 @@ t_list	*ft_add_newlst(int fd, t_list **lst_arr)
 
 char	*ft_newstr(int fd)
 {
-	char	*buf;
+	char	buf[BUFFER_SIZE];
 	int		byte_read;
 	char	*copy_buf;
 
-	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	byte_read = read(fd, buf, BUFFER_SIZE);
 	if (byte_read <= 0)
-	{
-		free(buf);
 		return (NULL);
-	}
 	buf[byte_read] = '\0';
 	copy_buf = ft_strdup(buf, byte_read);
-	free(buf);
 	return (copy_buf);
 }
 
