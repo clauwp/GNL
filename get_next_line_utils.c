@@ -119,5 +119,5 @@ void ft_delnode(t_list **lst)
 		}
 		else
 			break ;
-	}
+	}		
 }

@@ -37,6 +37,8 @@ char	*get_next_line(int fd)
 			break;
 		ft_add_newnode(buf, lst);
 	}
+	if (buf == NULL && lst->node == NULL)
+		free(lst);
 	if (*lst_arr == NULL)
 		free(lst_arr);
 	return (ft_newline(&lst, ft_getstr_len(lst)));
