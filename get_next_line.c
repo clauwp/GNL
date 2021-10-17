@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 		lst_arr = (t_list **)malloc(sizeof(t_list *));
 		*lst_arr = NULL;
 	}
-	if (fd <= 0)
+	if (fd < 0)
 		return (NULL);
 	lst = ft_getlst(fd, lst_arr);
 	while (ft_getstr_len(lst) <= 0)
