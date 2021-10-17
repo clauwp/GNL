@@ -37,7 +37,7 @@ char	*get_next_line(int fd)
 			break;
 		ft_add_newnode(buf, lst);
 	}
-	if (*lst_arr ==NULL)
+	if (*lst_arr == NULL)
 		free(lst_arr);
 	return (ft_newline(&lst, ft_getstr_len(lst)));
 }
@@ -89,25 +89,21 @@ char	*ft_newstr(int fd)
 		return (NULL);
 	}
 	buf[byte_read] = '\0';
-	copy_buf = ft_strdup(buf);
+	copy_buf = ft_strdup(buf, byte_read);
 	free(buf);
 	return (copy_buf);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1, int bytes)
 {
 	char	*retstr;
 	char	*copyretstr;
-	int		len;
 
-	len = 0;
-	while (s1[len])
-		len++;
-	retstr = (char *)malloc(sizeof(char) * (len + 1));
+	retstr = (char *)malloc(sizeof(char) * (bytes + 1));
 	if (retstr != NULL)
 	{
 		copyretstr = retstr;
-		while (*s1)
+		while (bytes-- > 0)
 			*retstr++ = *s1++;
 		*retstr = 0;
 		return (copyretstr);
